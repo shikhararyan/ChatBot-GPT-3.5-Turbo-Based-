@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ChatGPT Web Interface</title>
+    <style>
+        body {
+            background-image: url('background.jpg'); /* Replace 'background.jpg' with the path to your image file */
+            background-size: cover;
+            background-position: center;
+            font-family: Arial, sans-serif;
+            color: #333;
+            text-align: center;
+            padding-top: 100px;
+        }
+        h1 {
+            font-size: 36px;
+        }
+        #chat {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        #chat-box {
+            text-align: left;
+            margin-bottom: 10px;
+        }
+        #user-input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <h1>Chat with ChatGPT</h1>
+    <div id="chat">
+        <div id="chat-box"></div>
+        <input type="text" id="user-input" placeholder="Type your message here..." onkeypress="send_message(event)">
+    </div>
+    <script>
+        function send_message(event) {
+            if (event.key === 'Enter') {
+                var user_input = document.getElementById('user-input').value;
+                document.getElementById('chat-box').innerHTML += '<p style="margin: 5px 0;">User: ' + user_input + '</p>';
+                document.getElementById('user-input').value = '';
+                fetch('/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({message: user_input})
+                })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('chat-box').innerHTML += '<p style="margin: 5px 0;">ChatGPT: ' + data.reply + '</p>';
+                });
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ChatGPT Web Interface</title>
+</head>
+<body>
+    <h1>Chat with ChatGPT</h1>
+    <div id="chat">
+        <div id="chat-box"></div>
+        <input type="text" id="user-input" placeholder="Type your message here..." onkeypress="send_message(event)">
+    </div>
+    <script>
+        function send_message(event) {
+            if (event.key === 'Enter') {
+                var user_input = document.getElementById('user-input').value;
+                document.getElementById('chat-box').innerHTML += '<p>User: ' + user_input + '</p>';
+                document.getElementById('user-input').value = '';
+                fetch('/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({message: user_input})
+                })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('chat-box').innerHTML += '<p>ChatGPT: ' + data.reply + '</p>';
+                });
+            }
+        }
+    </script>
+</body>
+</html>
