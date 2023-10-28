@@ -1,9 +1,9 @@
-from flask import Flask, render_template, request, jsonify
+you api keyfrom flask import Flask, render_template, request, jsonify
 import openai
 
 app = Flask(__name__)
 
-openai.api_key = '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'
+openai.api_key = 'enter your openai API key'
 
 messages = []
 
