@@ -9,7 +9,7 @@ messages = []
 
 @app.route('/')
 def index():
-    return render_template('index1.html')
+    return render_template('index.html')
 
 @app.route('/chat', methods=['POST'])
 def chat_with_gpt():
